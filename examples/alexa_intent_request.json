@@ -1,0 +1,43 @@
+{
+  "version": "1.0",
+  "session": {
+    "sessionId": "amzn1.echo-api.session.test-123",
+    "application": {
+      "applicationId": "amzn1.ask.skill.test"
+    },
+    "user": {
+      "userId": "amzn1.ask.account.test-user"
+    },
+    "new": true
+  },
+  "context": {
+    "System": {
+      "application": {
+        "applicationId": "amzn1.ask.skill.test"
+      },
+      "user": {
+        "userId": "amzn1.ask.account.test-user"
+      },
+      "device": {
+        "deviceId": "amzn1.ask.device.test"
+      }
+    }
+  },
+  "request": {
+    "type": "IntentRequest",
+    "requestId": "amzn1.echo-api.request.test",
+    "timestamp": "2026-07-07T20:00:00Z",
+    "locale": "pt-BR",
+    "intent": {
+      "name": "AskJarvisIntent",
+      "confirmationStatus": "NONE",
+      "slots": {
+        "question": {
+          "name": "question",
+          "value": "o que e inteligencia artificial",
+          "confirmationStatus": "NONE"
+        }
+      }
+    }
+  }
+}

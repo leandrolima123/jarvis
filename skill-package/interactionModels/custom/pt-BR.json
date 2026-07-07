@@ -1,0 +1,46 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "jarvis",
+      "intents": [
+        {
+          "name": "AMAZON.CancelIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.HelpIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.StopIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.NavigateHomeIntent",
+          "samples": []
+        },
+        {
+          "name": "AskJarvisIntent",
+          "slots": [
+            {
+              "name": "question",
+              "type": "AMAZON.SearchQuery",
+              "samples": [
+                "{question}"
+              ]
+            }
+          ],
+          "samples": [
+            "pergunta {question}",
+            "o que é {question}",
+            "me fale sobre {question}",
+            "quero saber {question}",
+            "me explica {question}",
+            "{question}"
+          ]
+        }
+      ],
+      "types": []
+    }
+  }
+}
