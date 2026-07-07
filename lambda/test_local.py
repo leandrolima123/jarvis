@@ -9,6 +9,18 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from lambda_function import lambda_handler
 
 
+def load_env_file() -> None:
+    env_path = Path(__file__).resolve().parent.parent / ".env"
+    if not env_path.exists():
+        return
+    for line in env_path.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, value = line.split("=", 1)
+        os.environ.setdefault(key.strip(), value.strip())
+
+
 def main() -> None:
     if len(sys.argv) < 2:
         print("Uso: python test_local.py <arquivo.json>")
@@ -21,6 +33,7 @@ def main() -> None:
 
 
 if __name__ == "__main__":
+    load_env_file()
     if not os.getenv("GEMINI_API_KEY"):
-        print("Defina GEMINI_API_KEY antes de testar IntentRequest.")
+        print("Defina GEMINI_API_KEY no .env ou no ambiente antes de testar IntentRequest.")
     main()

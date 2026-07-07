@@ -1,7 +1,8 @@
 import logging
 import os
 
-import google.generativeai as genai
+from google import genai
+from google.genai import types
 
 logger = logging.getLogger(__name__)
 
@@ -17,16 +18,37 @@ SYSTEM_PROMPT = (
 class GeminiService:
     def __init__(self) -> None:
         api_key = os.environ["GEMINI_API_KEY"]
-        model_name = os.getenv("GEMINI_MODEL", "gemini-2.0-flash")
-        genai.configure(api_key=api_key)
-        self._model = genai.GenerativeModel(
-            model_name=model_name,
+        self._model_name = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
+        self._client = genai.Client(api_key=api_key)
+        self._config = types.GenerateContentConfig(
             system_instruction=SYSTEM_PROMPT,
+            max_output_tokens=256,
+            temperature=0.7,
         )
+
+    def _build_history(
+        self, history: list[dict[str, list[str] | str]]
+    ) -> list[types.Content]:
+        contents: list[types.Content] = []
+        for item in history:
+            role = item.get("role")
+            parts = item.get("parts") or []
+            text = parts[0] if parts else ""
+            if not text:
+                continue
+            if role == "user":
+                contents.append(types.UserContent(parts=[types.Part.from_text(text=str(text))]))
+            elif role == "model":
+                contents.append(types.ModelContent(parts=[types.Part.from_text(text=str(text))]))
+        return contents
 
     def ask(self, question: str, history: list[dict[str, list[str] | str]]) -> str:
         try:
-            chat = self._model.start_chat(history=history)
+            chat = self._client.chats.create(
+                model=self._model_name,
+                config=self._config,
+                history=self._build_history(history),
+            )
             response = chat.send_message(question)
             text = response.text.strip() if response.text else ""
             if not text:
