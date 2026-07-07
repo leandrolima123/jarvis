@@ -29,7 +29,7 @@ Compatível com [import Git de Alexa-Hosted Skill](https://developer.amazon.com/
 5. Idioma padrão: **Portuguese (BR)**
 6. Após importar, vá em **Code** → **Environment Variables** e adicione:
    - `GEMINI_API_KEY` = sua chave ([Google AI Studio](https://aistudio.google.com/apikey))
-   - `GEMINI_MODEL` = `gemini-2.0-flash` (opcional)
+   - `GEMINI_MODEL` = `gemini-2.5-flash` (opcional)
    - `MAX_HISTORY_TURNS` = `20` (opcional)
 7. Clique em **Deploy** e teste no simulador
 
@@ -73,7 +73,7 @@ Exemplos:
 | Variável | Obrigatória | Default | Descrição |
 |----------|-------------|---------|-----------|
 | `GEMINI_API_KEY` | Sim | — | Chave da API Gemini |
-| `GEMINI_MODEL` | Não | `gemini-2.0-flash` | Modelo Gemini |
+| `GEMINI_MODEL` | Não | `gemini-2.5-flash` | Modelo Gemini |
 | `MAX_HISTORY_TURNS` | Não | `20` | Turnos em cache por sessão |
 
 Configure em **Alexa Developer Console → Code → Environment Variables**.
