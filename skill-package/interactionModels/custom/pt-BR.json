@@ -1,7 +1,7 @@
 {
   "interactionModel": {
     "languageModel": {
-      "invocationName": "jarvis",
+      "invocationName": "assistente jarvis",
       "intents": [
         {
           "name": "AMAZON.CancelIntent",

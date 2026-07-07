@@ -62,11 +62,11 @@ O histórico é indexado por `session.sessionId`. Cada sessão mantém até 20 p
 
 ## Invocation name
 
-A skill responde a: **"Alexa, abra Jarvis"**
+A skill se chama **Jarvis**, mas o nome de invocação é **`assistente jarvis`** (a Amazon não permite usar o mesmo nome da skill).
 
 Exemplos:
-- "Alexa, abra Jarvis e pergunte o que é inteligência artificial"
-- "Alexa, abra Jarvis"
+- "Alexa, abra assistente jarvis"
+- "Alexa, abra assistente jarvis e pergunte o que é inteligência artificial"
 
 ## Variáveis de ambiente (Lambda)
 

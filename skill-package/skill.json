@@ -16,8 +16,8 @@
           "summary": "Assistente inteligente com Gemini",
           "description": "Converse com o Jarvis e faça perguntas sobre qualquer assunto.",
           "examplePhrases": [
-            "Alexa, abra Jarvis",
-            "Alexa, pergunte ao Jarvis o que é inteligência artificial"
+            "Alexa, abra assistente jarvis",
+            "Alexa, pergunte ao assistente jarvis o que é inteligência artificial"
           ],
           "keywords": [
             "jarvis",
@@ -28,7 +28,7 @@
         }
       },
       "isAvailableWorldwide": false,
-      "testingInstructions": "Diga Alexa, abra Jarvis e faça uma pergunta.",
+      "testingInstructions": "Diga Alexa, abra assistente jarvis e faça uma pergunta.",
       "category": "KNOWLEDGE_AND_TRIVIA",
       "distributionCountries": []
     },
