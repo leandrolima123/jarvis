@@ -4,7 +4,8 @@
     "apis": {
       "custom": {
         "endpoint": {
-          "sourceDir": "lambda/"
+          "sourceDir": "lambda",
+          "uri": "ask-custom-jarvis-default"
         },
         "interfaces": []
       }
@@ -30,7 +31,9 @@
       "isAvailableWorldwide": false,
       "testingInstructions": "Diga Alexa, abra assistente jarvis e faça uma pergunta.",
       "category": "KNOWLEDGE_AND_TRIVIA",
-      "distributionCountries": []
+      "distributionCountries": [
+        "BR"
+      ]
     },
     "privacyAndCompliance": {
       "allowsPurchases": false,
@@ -40,7 +43,7 @@
       "containsAds": false,
       "locales": {
         "pt-BR": {
-          "privacyPolicyUrl": "https://example.com/privacy"
+          "privacyPolicyUrl": "https://github.com/leandrolima123/jarvis"
         }
       }
     }

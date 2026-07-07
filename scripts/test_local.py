@@ -4,7 +4,8 @@ import os
 import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
+LAMBDA_DIR = Path(__file__).resolve().parent.parent / "lambda"
+sys.path.insert(0, str(LAMBDA_DIR))
 
 from lambda_function import lambda_handler
 
@@ -23,7 +24,7 @@ def load_env_file() -> None:
 
 def main() -> None:
     if len(sys.argv) < 2:
-        print("Uso: python test_local.py <arquivo.json>")
+        print("Uso: python scripts/test_local.py <arquivo.json>")
         sys.exit(1)
 
     event_path = Path(sys.argv[1])
