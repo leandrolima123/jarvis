@@ -26,7 +26,8 @@
               "name": "question",
               "type": "AMAZON.SearchQuery",
               "samples": [
-                "{question}"
+                "me fale {question}",
+                "sobre {question}"
               ]
             }
           ],
@@ -36,7 +37,8 @@
             "me fale sobre {question}",
             "quero saber {question}",
             "me explica {question}",
-            "{question}"
+            "diga {question}",
+            "responda {question}"
           ]
         }
       ],
