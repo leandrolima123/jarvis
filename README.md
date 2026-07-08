@@ -1,115 +1,72 @@
 # Jarvis Alexa Skill (Alexa-Hosted)
 
-Skill Alexa customizada em Python (AWS Lambda) que processa perguntas com Google Gemini e mantém histórico de conversa em memória (até 20 turnos por sessão).
+Skill Alexa em Python (AWS Lambda) com Gemini via REST API. Compativel com Python 3.8 da Alexa-Hosted (sem dependencias pip).
 
-## Estrutura do projeto
+## Estrutura (espelha AWS + git import)
 
 ```
 jarvis-skill/
 ├── lambda/
-│   ├── lambda_function.py      # Handler Lambda (entry point)
-│   ├── gemini_service.py       # Integração Gemini
-│   ├── conversation_cache.py   # Cache em memória
+│   ├── lambda_function.py
 │   ├── requirements.txt
-│   └── (somente codigo Lambda)
-├── scripts/
-│   └── test_local.py           # Teste local do handler
+│   └── .env                 # so na console AWS (nao commitar)
 ├── skill-package/
-│   ├── skill.json              # Manifest da skill
+│   ├── skill.json
 │   └── interactionModels/custom/pt-BR.json
-└── examples/                   # Payloads JSON para testes
+├── examples/
+├── scripts/test_local.py
+└── README.md
 ```
 
-Compatível com [import Git de Alexa-Hosted Skill](https://developer.amazon.com/en-US/docs/alexa/hosted-skills/alexa-hosted-skills-git-import.html).
+## Configuracao na AWS (Developer Console)
 
-## Importar na Alexa Developer Console
+### Code
 
-> **Importante:** import Git funciona apenas ao **criar skill nova**. Se voce ja tem `amzn1.ask.skill.bd6515fd-...`, use a aba **Code** para colar o codigo (nao tente importar de novo).
+1. `lambda/lambda_function.py` — codigo principal
+2. `lambda/requirements.txt` — vazio (sem pip extra)
+3. `lambda/.env`:
 
-1. Repo publico: `https://github.com/leandrolima123/jarvis.git`
-2. [Alexa Developer Console](https://developer.amazon.com/alexa/console/ask) → **Create Skill** (nova)
-3. Custom → **Alexa-Hosted (Python)** → **Import skill**
-4. Cole a URL `.git` exata acima
-5. Idioma padrao: **Portuguese (BR)** (deve existir `skill-package/interactionModels/custom/pt-BR.json`)
-6. **Code** → **Environment Variables** → `GEMINI_API_KEY`
-7. **Deploy** → teste no simulador
+```
+GEMINI_API_KEY=sua_chave
+GEMINI_MODEL=gemini-2.5-flash
+```
 
-### Erro "tente novamente mais tarde"
+4. **Deploy**
 
-| Verificacao | Status do seu repo |
-|-------------|-------------------|
-| Repo publico | OK |
-| Tamanho < 50 MB | OK (~150 KB) |
-| `lambda/lambda_function.py` | OK |
-| `skill-package/skill.json` | OK (corrigido) |
-| Idioma pt-BR na criacao | Voce precisa selecionar |
-| Skill ja existente | **Provavel causa** — import nao atualiza skill existente |
+### Build
 
-**Alternativa (recomendada para voce):** abra a skill existente → aba **Code** → substitua arquivos de `lambda/` → **Deploy** → **Build Model**.
+- Invocation name: **`modo jarvis`**
+- Intent principal: `AskJarvisIntent` (slot `question`)
+- **Build Model**
 
-### Skill ja existente
+### Teste
 
-1. **Code** → copie arquivos de `lambda/` do GitHub
-2. **Environment Variables** → `GEMINI_API_KEY`, `GEMINI_MODEL=gemini-2.5-flash`
-3. **Deploy**
-4. **Build** → invocation `assistente jarvis` → **Build Model**
+```
+abrir modo jarvis
+o que é inteligência artificial
+```
 
 ## Teste local
 
 ```bash
-cd lambda
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
+cp lambda/.env.example lambda/.env   # edite a chave
+cd lambda && python -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt      # nada a instalar
 cd ..
-
-export GEMINI_API_KEY=sua_chave
-
 python scripts/test_local.py examples/alexa_launch_request.json
 python scripts/test_local.py examples/alexa_intent_request.json
 ```
 
-## Fluxo
+## Variaveis (.env na pasta lambda)
 
-```
-Alexa → AWS Lambda (lambda_handler) → ConversationCache → Gemini → resposta JSON
-```
+| Variavel | Obrigatoria | Default |
+|----------|-------------|---------|
+| `GEMINI_API_KEY` | Sim | — |
+| `GEMINI_MODEL` | Nao | `gemini-2.5-flash` |
+| `MAX_HISTORY_TURNS` | Nao | `20` |
 
-- **LaunchRequest** → boas-vindas
-- **AskJarvisIntent** → pergunta processada com histórico
-- **AMAZON.StopIntent** / **SessionEndedRequest** → limpa cache da sessão
-- **AMAZON.HelpIntent** → instruções de uso
+## Git import
 
-O histórico é indexado por `session.sessionId`. Cada sessão mantém até 20 pares pergunta/resposta.
+Repo: `https://github.com/leandrolima123/jarvis.git`
 
-## Invocation name
-
-A skill se chama **Jarvis**, mas o nome de invocação é **`assistente jarvis`** (a Amazon não permite usar o mesmo nome da skill).
-
-Exemplos:
-- "Alexa, abra assistente jarvis"
-- "Alexa, abra assistente jarvis e pergunte o que é inteligência artificial"
-
-## Variáveis de ambiente (Lambda)
-
-| Variável | Obrigatória | Default | Descrição |
-|----------|-------------|---------|-----------|
-| `GEMINI_API_KEY` | Sim | — | Chave da API Gemini |
-| `GEMINI_MODEL` | Não | `gemini-2.5-flash` | Modelo Gemini |
-| `MAX_HISTORY_TURNS` | Não | `20` | Turnos em cache por sessão |
-
-Configure em **Alexa Developer Console → Code → Environment Variables**.
-
-## Limitações
-
-- Cache em memória por instância Lambda (pode resetar entre invocações frias ou instâncias diferentes)
-- Para persistência robusta, migrar cache para DynamoDB (fase futura)
-- Respostas otimizadas para voz (curtas, sem markdown)
-
-## ASK CLI (opcional)
-
-```bash
-ask deploy
-```
-
-Requer [ASK CLI](https://developer.amazon.com/en-US/docs/alexa/smapi/ask-cli-intro.html) configurado com a skill importada.
+Import Git so funciona ao **criar skill nova**. Skill existente: copie arquivos manualmente na aba Code.

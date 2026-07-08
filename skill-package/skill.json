@@ -11,29 +11,26 @@
       }
     },
     "publishingInformation": {
+      "distributionCountries": [],
+      "isAvailableWorldwide": true,
       "locales": {
         "pt-BR": {
-          "name": "Jarvis",
-          "summary": "Assistente inteligente com Gemini",
+          "name": "jarvis",
+          "summary": "Assistente Jarvis com Gemini",
           "description": "Converse com o Jarvis e faça perguntas sobre qualquer assunto.",
           "examplePhrases": [
-            "Alexa, abra assistente jarvis",
-            "Alexa, pergunte ao assistente jarvis o que é inteligência artificial"
+            "Alexa, abra modo jarvis",
+            "Alexa, abra modo jarvis e pergunte o que é inteligência artificial"
           ],
           "keywords": [
             "jarvis",
             "assistente",
-            "perguntas",
             "gemini"
           ]
         }
       },
-      "isAvailableWorldwide": false,
-      "testingInstructions": "Diga Alexa, abra assistente jarvis e faça uma pergunta.",
-      "category": "KNOWLEDGE_AND_TRIVIA",
-      "distributionCountries": [
-        "BR"
-      ]
+      "testingInstructions": "Diga Alexa, abra modo jarvis e faça uma pergunta.",
+      "category": "KNOWLEDGE_AND_TRIVIA"
     },
     "privacyAndCompliance": {
       "allowsPurchases": false,

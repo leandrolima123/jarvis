@@ -11,15 +11,18 @@ from lambda_function import lambda_handler
 
 
 def load_env_file() -> None:
-    env_path = Path(__file__).resolve().parent.parent / ".env"
-    if not env_path.exists():
-        return
-    for line in env_path.read_text(encoding="utf-8").splitlines():
-        line = line.strip()
-        if not line or line.startswith("#") or "=" not in line:
+    for env_path in (
+        Path(__file__).resolve().parent.parent / "lambda" / ".env",
+        Path(__file__).resolve().parent.parent / ".env",
+    ):
+        if not env_path.exists():
             continue
-        key, value = line.split("=", 1)
-        os.environ.setdefault(key.strip(), value.strip())
+        for line in env_path.read_text(encoding="utf-8").splitlines():
+            line = line.strip()
+            if not line or line.startswith("#") or "=" not in line:
+                continue
+            key, value = line.split("=", 1)
+            os.environ.setdefault(key.strip(), value.strip())
 
 
 def main() -> None:
@@ -35,6 +38,6 @@ def main() -> None:
 
 if __name__ == "__main__":
     load_env_file()
-    if not os.getenv("GEMINI_API_KEY"):
-        print("Defina GEMINI_API_KEY no .env ou no ambiente antes de testar IntentRequest.")
+    if not os.getenv("GEMINI_API_KEY") and not os.getenv("GOOGLE_API_KEY"):
+        print("Defina GEMINI_API_KEY no lambda/.env antes de testar IntentRequest.")
     main()

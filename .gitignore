@@ -1,4 +1,5 @@
 .env
+lambda/.env
 .venv/
 lambda/.venv/
 __pycache__/

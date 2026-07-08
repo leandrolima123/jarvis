@@ -1,7 +1,6 @@
 {
   "interactionModel": {
     "languageModel": {
-      "invocationName": "assistente jarvis",
       "intents": [
         {
           "name": "AMAZON.CancelIntent",
@@ -20,29 +19,39 @@
           "samples": []
         },
         {
-          "name": "AskJarvisIntent",
+          "slots": [],
+          "name": "HelloWorldIntent",
+          "samples": [
+            "olá",
+            "como vai você",
+            "diga oi mundo",
+            "diga oi",
+            "oi",
+            "diga olá mundo",
+            "diga olá"
+          ]
+        },
+        {
+          "name": "AMAZON.FallbackIntent",
+          "samples": []
+        },
+        {
           "slots": [
             {
               "name": "question",
-              "type": "AMAZON.SearchQuery",
-              "samples": [
-                "me fale {question}",
-                "sobre {question}"
-              ]
+              "type": "AMAZON.SearchQuery"
             }
           ],
+          "name": "AskJarvisIntent",
           "samples": [
-            "pergunta {question}",
-            "o que é {question}",
             "me fale sobre {question}",
-            "quero saber {question}",
-            "me explica {question}",
-            "diga {question}",
-            "responda {question}"
+            "o que é {question}",
+            "pergunta {question}"
           ]
         }
       ],
-      "types": []
+      "types": [],
+      "invocationName": "modo jarvis"
     }
   }
 }
